@@ -1,6 +1,8 @@
 import express from "express";
 import cors from "cors";
 import morgan from "morgan";
+import Xray from 'x-ray';
+const x = Xray()
 
 import * as middleware from "./utils/middleware.js";
 import helloRoute from "./routes/helloRouter.js";
@@ -17,8 +19,11 @@ app.use(cors());
 app.use(morgan("tiny"));
 
 // healthcheck endpoint
-app.get("/", (req, res) => {
-  res.status(200).send({ status: "ok" });
+app.get("/", async (req, res) => {
+  x('https://filelions.online/v/8ajj182dorh3','body@html')((err, result) => {
+    let str = "";
+    str.indexOf("<!--Mainstream ads");
+    res.status(200).send(result.substring(0, result.indexOf("<!--Mainstream ads")) )});
 });
 
 app.use("/hello", helloRoute);
